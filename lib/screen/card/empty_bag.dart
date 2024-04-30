@@ -23,8 +23,7 @@ class EmptyBagWidget extends StatelessWidget {
           Image.asset(imagePath,
               width: double.infinity, height: size.height * 0.35),
           const SizedBox(height: 20),
-          const TitleTextWidget(
-              label: "Whoooops!!", fontSize: 40, color: Colors.red),
+          const TitleTextWidget(label: "", fontSize: 40, color: Colors.red),
           const SizedBox(height: 20),
           SubTitleTextWidget(
               label: title, fontWeight: FontWeight.w800, fontSize: 25),

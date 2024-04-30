@@ -1,8 +1,9 @@
+import 'package:ecommerce_admin_app/widgets/products/heart_btn.dart';
 import 'package:ecommerce_admin_app/widgets/subtitle_text.dart';
 import 'package:ecommerce_admin_app/widgets/title_text.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({super.key});
@@ -31,11 +32,11 @@ class _ProductWidgetState extends State<ProductWidget> {
             ),
           ),
           const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
+          const Padding(
+            padding: EdgeInsets.all(2.0),
             child: Row(
               children: [
-                const Flexible(
+                Flexible(
                   flex: 5,
                   child: TitleTextWidget(
                     label: "Title",
@@ -44,10 +45,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 ),
                 Flexible(
                   flex: 2,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(IconlyLight.heart),
-                  ),
+                  child: HeartButtonWidget(),
                 ),
               ],
             ),

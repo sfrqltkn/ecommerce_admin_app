@@ -1,10 +1,10 @@
 import 'package:ecommerce_admin_app/screen/card/quantity_btm_sheet.dart';
+import 'package:ecommerce_admin_app/widgets/products/heart_btn.dart';
 import 'package:ecommerce_admin_app/widgets/subtitle_text.dart';
 import 'package:ecommerce_admin_app/widgets/title_text.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({super.key});
@@ -47,13 +47,7 @@ class CardWidget extends StatelessWidget {
                                 color: Colors.red,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                IconlyLight.heart,
-                                color: Colors.red,
-                              ),
-                            ),
+                            const HeartButtonWidget(),
                           ],
                         ),
                       ],

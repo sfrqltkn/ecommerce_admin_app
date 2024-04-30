@@ -1,4 +1,7 @@
 import 'package:ecommerce_admin_app/providers/theme_provider.dart';
+import 'package:ecommerce_admin_app/screen/init_screen/viewed_recently.dart';
+import 'package:ecommerce_admin_app/screen/init_screen/wishlist.dart';
+import 'package:ecommerce_admin_app/service/my_app_function.dart';
 import 'package:ecommerce_admin_app/widgets/app_name_text.dart';
 import 'package:ecommerce_admin_app/widgets/subtitle_text.dart';
 import 'package:ecommerce_admin_app/widgets/title_text.dart';
@@ -86,12 +89,16 @@ class ProfileScreen extends StatelessWidget {
               ),
               CustomListTile(
                 imagePath: AssetsManager.bagimg1,
-                function: () {},
+                function: () {
+                  Navigator.pushNamed(context, WishlistScreen.routName);
+                },
                 text: "Favori",
               ),
               CustomListTile(
                 imagePath: AssetsManager.clock,
-                function: () {},
+                function: () {
+                  Navigator.pushNamed(context, ViewedRecentlyScreen.routName);
+                },
                 text: "View Recently",
               ),
               CustomListTile(
@@ -119,7 +126,13 @@ class ProfileScreen extends StatelessWidget {
           ),
           Center(
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                await MyAppFunction.showErrorOrWarningDialog(
+                    context: context,
+                    subtitle: "are you sure ? ",
+                    fct: () {},
+                    isError: false);
+              },
               label: const Text("Login"),
               icon: const Icon(Icons.login),
               style: ElevatedButton.styleFrom(
