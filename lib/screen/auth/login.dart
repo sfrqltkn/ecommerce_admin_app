@@ -1,6 +1,11 @@
+import 'package:ecommerce_admin_app/constant/validator.dart';
+import 'package:ecommerce_admin_app/screen/auth/register.dart';
 import 'package:ecommerce_admin_app/widgets/app_name_text.dart';
+import 'package:ecommerce_admin_app/widgets/google_btn.dart';
+import 'package:ecommerce_admin_app/widgets/subtitle_text.dart';
 import 'package:ecommerce_admin_app/widgets/title_text.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,26 +15,184 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  late final FocusNode _emailFocusNode;
+  late final FocusNode _passwordFocusNode;
+
+  final _formkey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _emailFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (mounted) {
+      _emailController.dispose();
+      _passwordController.dispose();
+
+      _emailFocusNode.dispose();
+      _passwordFocusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> _loginFct() async {
+    final isValid = _formkey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: const Scaffold(
+      child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 60),
-                AppNameTextWidget(fontSize: 30),
-                SizedBox(height: 60),
-                Align(
+                const SizedBox(height: 50),
+                const AppNameTextWidget(fontSize: 20),
+                const SizedBox(height: 60),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: TitleTextWidget(label: "Welcome Back"),
                 ),
-                SizedBox(height: 60),
+                const SizedBox(height: 20),
+                Form(
+                  key: _formkey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        controller: _emailController,
+                        focusNode: _emailFocusNode,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          hintText: "Email Adress",
+                          prefixIcon: Icon(IconlyLight.message),
+                        ),
+                        onFieldSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(_passwordFocusNode);
+                        },
+                        validator: (value) {
+                          return MyValidators.emailValidator(value);
+                        },
+                      ),
+                      const SizedBox(height: 16.0),
+                      TextFormField(
+                        controller: _passwordController,
+                        focusNode: _passwordFocusNode,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(IconlyLight.password),
+                        ),
+                        onFieldSubmitted: (value) async {
+                          await _loginFct();
+                        },
+                        validator: (value) {
+                          return MyValidators.passwordValidator(value);
+                        },
+                      ),
+                      const SizedBox(height: 16.0),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: const SubTitleTextWidget(
+                            label: "Forget Password",
+                            fontStyle: FontStyle.italic,
+                            textDecoration: TextDecoration.none,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(8.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                          onPressed: () async {
+                            await _loginFct();
+                          },
+                          label: const Text("Login"),
+                          icon: const Icon(Icons.login),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      const SubTitleTextWidget(label: "Or Connect using"),
+                      const SizedBox(height: 16.0),
+                      SizedBox(
+                        height: kBottomNavigationBarHeight + 10,
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: kBottomNavigationBarHeight,
+                                child: FittedBox(
+                                  child: GoogleButton(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: kBottomNavigationBarHeight - 15,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(12.0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: const Text("Guest"),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SubTitleTextWidget(label: "New Here ?"),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(RegisterScreen.routName);
+                            },
+                            child: const SubTitleTextWidget(
+                                label: "Sign Up", fontStyle: FontStyle.italic),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

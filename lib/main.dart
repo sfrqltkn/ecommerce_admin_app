@@ -1,6 +1,8 @@
 import 'package:ecommerce_admin_app/constant/theme_data.dart';
 import 'package:ecommerce_admin_app/providers/theme_provider.dart';
-import 'package:ecommerce_admin_app/root_screen.dart';
+// import 'package:ecommerce_admin_app/root_screen.dart';
+import 'package:ecommerce_admin_app/screen/auth/login.dart';
+import 'package:ecommerce_admin_app/screen/auth/register.dart';
 import 'package:ecommerce_admin_app/screen/init_screen/viewed_recently.dart';
 import 'package:ecommerce_admin_app/screen/init_screen/wishlist.dart';
 import 'package:ecommerce_admin_app/widgets/products/product_details.dart';
@@ -30,13 +32,14 @@ class MyApp extends StatelessWidget {
             title: 'Eccommer App',
             theme: Styles.themeData(
                 isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-            home: const RootScreen(),
+            home: const LoginScreen(),
             routes: {
               ProductDetailScreen.routName: (context) =>
                   const ProductDetailScreen(),
               WishlistScreen.routName: (context) => const WishlistScreen(),
               ViewedRecentlyScreen.routName: (context) =>
                   const ViewedRecentlyScreen(),
+              RegisterScreen.routName: (context) => const RegisterScreen(),
             },
           );
         },

@@ -1,5 +1,6 @@
 import 'package:ecommerce_admin_app/service/assets_manager.dart';
 import 'package:ecommerce_admin_app/widgets/subtitle_text.dart';
+import 'package:ecommerce_admin_app/widgets/title_text.dart';
 import 'package:flutter/material.dart';
 
 class MyAppFunction {
@@ -55,6 +56,60 @@ class MyAppFunction {
                 ],
               )
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> imagePickerDialog({
+    required BuildContext context,
+    required Function cameraFCT,
+    required Function galleryFCT,
+    required Function removeFCT,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: TitleTextWidget(label: "Choose option"),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    cameraFCT();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  label: const Text("Camera"),
+                  icon: const Icon(Icons.camera),
+                ),
+                 TextButton.icon(
+                  onPressed: () {
+                    galleryFCT();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  label: const Text("Galery"),
+                  icon: const Icon(Icons.image),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    removeFCT();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  label: const Text("Remove"),
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
           ),
         );
       },
